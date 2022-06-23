@@ -1,0 +1,12 @@
+<div class="card-container">
+  <h1>{{weather.name}}</h1>
+  <h1>{{weather.main.temp}}  °C</h1>
+  <div class="sky">
+    <img [src]="weather.weather[0].icon">
+    <span>{{weather.weather[0].main}}</span>
+  </div>
+  <span>Pressure: {{weather.main.pressure}}</span>
+  <span>Humidity: {{weather.main.humidity}}</span>
+  <span>Wind speed: {{weather.wind.speed}}</span>
+  <span></span>
+</div>

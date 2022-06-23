@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {WeatherService} from "../../core/services/weather.service";
+import {WeatherResponse} from "../../shared/models/weather";
 
 @Component({
   selector: 'app-weather-board',
@@ -16,14 +17,13 @@ export class WeatherBoardComponent implements OnInit {
     this.getLocation();
   }
 
+  public weather: WeatherResponse[] = [];
+
   getLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: any) => {
           if (position) {
-            console.log('position', position);
-            console.log("Latitude: " + position.coords.latitude +
-              "Longitude: " + position.coords.longitude);
-            this.weatherService.getWeather({lat: position.coords.latitude, lon: position.coords.longitude}).subscribe(res => console.log('weather', res));
+            this.weatherService.getWeather({lat: position.coords.latitude, lon: position.coords.longitude}).subscribe(res => this.weather.push(res));
           }
         },
         (error: any) => console.log(error));

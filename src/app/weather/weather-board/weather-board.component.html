@@ -1,1 +1,5 @@
-
+<ng-container *ngIf="weather">
+  <div class="board" *ngFor="let city of weather">
+    <app-weather-card [weather]="city"></app-weather-card>
+  </div>
+</ng-container>

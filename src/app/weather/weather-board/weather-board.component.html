@@ -1,5 +1,9 @@
-<ng-container *ngIf="weather">
-  <div class="board" *ngFor="let city of weather">
-    <app-weather-card [weather]="city"></app-weather-card>
+<div class="board">
+  <div class="add-city-container">
+    <form [formGroup]="addCityForm" (submit)="addCity()">
+      <input type="text" formControlName="city">
+      <button type="submit">Add City</button>
+    </form>
   </div>
-</ng-container>
+  <app-weather-card *ngFor="let city of weather" [weather]="city"></app-weather-card>
+</div>

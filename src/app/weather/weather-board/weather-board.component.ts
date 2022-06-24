@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {WeatherService} from "../../core/services/weather.service";
 import {WeatherResponse} from "../../shared/models/weather";
+import {FormControl, FormGroup} from "@angular/forms";
+import {StorageService} from "../../core/services/storage.service";
 
 @Component({
   selector: 'app-weather-board',
@@ -10,11 +12,21 @@ import {WeatherResponse} from "../../shared/models/weather";
 export class WeatherBoardComponent implements OnInit {
 
   constructor(
-    private weatherService: WeatherService
+    private weatherService: WeatherService,
+    private storageService: StorageService
   ) { }
 
   public ngOnInit(): void {
     this.getLocation();
+  }
+
+  addCityForm = new FormGroup({
+    city: new FormControl(''),
+  });
+
+  addCity() {
+    this.storageService.addCity(this.addCityForm.getRawValue().city);
+    this.addCityForm.controls.city.patchValue('')
   }
 
   public weather: WeatherResponse[] = [];

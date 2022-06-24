@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { WeatherBoardComponent } from './weather-board/weather-board.component';
 import { HttpClientModule } from "@angular/common/http";
 import { WeatherCardComponent } from './weather-card/weather-card.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -16,7 +17,8 @@ import { WeatherCardComponent } from './weather-card/weather-card.component';
   ],
   imports: [
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class WeatherModule { }

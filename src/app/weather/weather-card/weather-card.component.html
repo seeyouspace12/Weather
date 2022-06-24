@@ -6,10 +6,11 @@
     <h1>{{weather.main.temp}}  °C</h1>
   </span>
   <span class="sky">
-    <img [src]="weather.weather[0].icon">
+    <img [src]="weather.weather[0].icon" alt="">
     <span>{{weather.weather[0].main}}</span>
   </span>
   <span>Pressure: {{weather.main.pressure}}</span>
   <span>Humidity: {{weather.main.humidity}}</span>
   <span>Wind speed: {{weather.wind.speed}}</span>
+  <img *ngIf="!coordinates" src="assets/icons/red-cross-symbol-icon-as-delete-remove-fail-failure-incorr-incorrect-answer-89999776.jpg" class="remove" alt="Remove" (click)="removeCity()">
 </div>

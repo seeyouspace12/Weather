@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Coordinates, WeatherResponse} from "../../shared/models/weather";
 import {WeatherService} from "../../core/services/weather.service";
 import {mergeMap} from "rxjs";
+import {StorageService} from "../../core/services/storage.service";
 
 @Component({
   selector: 'app-weather-card',
@@ -16,7 +17,8 @@ export class WeatherCardComponent implements OnInit {
   weather: WeatherResponse
 
   constructor(
-    private weatherService: WeatherService
+    private weatherService: WeatherService,
+    private storageService: StorageService
   ) { }
 
   ngOnInit(): void {
@@ -26,5 +28,9 @@ export class WeatherCardComponent implements OnInit {
       this.weatherService.getCityData(this.city).pipe(
         mergeMap(coordinates => this.weatherService.getWeather(coordinates[0]))).subscribe(res => this.weather = res)
     }
+  }
+
+  removeCity(): void {
+    this.storageService.removeCity(this.city);
   }
 }

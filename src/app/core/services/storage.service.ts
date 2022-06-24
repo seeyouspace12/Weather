@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject} from "rxjs";
+import {BehaviorSubject, Subject, take} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +23,15 @@ export class StorageService {
   getCities(): Subject<string[]> {
     this.cities$.next(JSON.parse(localStorage.getItem('cities')));
     return this.cities$;
+  }
+
+  removeCity(cityName): void {
+    this.cities$
+      .pipe(take(1))
+      .subscribe(cities => {
+        const newCities = cities.filter(city => city !== cityName);
+        this.cities$.next(newCities);
+        localStorage.setItem('cities', JSON.stringify(newCities))
+      })
   }
 }

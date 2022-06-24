@@ -24,3 +24,15 @@ span {
 .city-name {
   min-width: 250px;
 }
+
+.remove {
+  position: absolute;
+  right: 30px;
+  color: red;
+  height: 20px;
+  transform: translateY(-28px);
+}
+
+.remove:hover {
+  cursor: pointer;
+}

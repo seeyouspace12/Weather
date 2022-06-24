@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {WeatherService} from "../../core/services/weather.service";
-import {WeatherResponse} from "../../shared/models/weather";
+import {Coordinates, WeatherResponse} from "../../shared/models/weather";
 import {FormControl, FormGroup} from "@angular/forms";
 import {StorageService} from "../../core/services/storage.service";
+import {Subject} from "rxjs";
 
 @Component({
   selector: 'app-weather-board',
@@ -16,6 +17,8 @@ export class WeatherBoardComponent implements OnInit {
     private storageService: StorageService
   ) { }
 
+  cities$: Subject<string[]> = this.storageService.getCities();
+
   public ngOnInit(): void {
     this.getLocation();
   }
@@ -23,6 +26,8 @@ export class WeatherBoardComponent implements OnInit {
   addCityForm = new FormGroup({
     city: new FormControl(''),
   });
+
+  mainCityCoords: Coordinates
 
   addCity() {
     this.storageService.addCity(this.addCityForm.getRawValue().city);
@@ -35,12 +40,12 @@ export class WeatherBoardComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: any) => {
           if (position) {
-            this.weatherService.getWeather({lat: position.coords.latitude, lon: position.coords.longitude}).subscribe(res => this.weather.push(res));
+            this.mainCityCoords = { lat: position.coords.latitude, lon: position.coords.longitude }
           }
         },
-        (error: any) => console.log(error));
+        (error: any) => console.log(error))
     } else {
-      alert("Geolocation is not supported by this browser.");
+      alert("Geolocation is not supported by this browser.")
     }
   }
 

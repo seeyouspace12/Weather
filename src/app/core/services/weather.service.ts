@@ -15,9 +15,8 @@ export class WeatherService {
     return this.http.get<WeatherResponse>(`https://fcc-weather-api.glitch.me/api/current`, { params: queryParams })
   }
 
-  // public getCity(params?: any): Observable<any>{
-  //   // const queryParams = new HttpParams({fromObject: GetFilmsParams.serialize(params)});
-  //   // return this.http.get<any>(`https://nominatim.openstreetmap.org/search?city=kyiv&format=json`, {params: queryParams});
-  //   return this.http.get<any>(`https://nominatim.openstreetmap.org/search?city=kyiv&format=json`)
-  // }
+  public getCityData(city?: string): Observable<Coordinates[]>{
+    const queryParams = new HttpParams({fromObject: {city, format: 'json'} as any});
+    return this.http.get<Coordinates[]>(`https://nominatim.openstreetmap.org/search`, { params: queryParams })
+  }
 }

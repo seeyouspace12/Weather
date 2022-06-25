@@ -4,5 +4,18 @@
 
 input {
   margin-right: 10px;
+  font-size: 20px;
 }
 
+.pagination-panel {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  font-size: 20px;
+}
+
+.pagination-panel button:first-child {
+  margin-right: 10px;
+}

@@ -6,5 +6,11 @@
     </form>
   </div>
   <app-weather-card *ngIf="mainCityCoords" [coordinates]="mainCityCoords"></app-weather-card>
-  <app-weather-card *ngFor="let city of (cities$ | async)" [city]="city"></app-weather-card>
+  <ng-container *ngFor="let city of (cities$ | async); index as i; trackBy: trackByFn">
+    <app-weather-card *ngIf="i < page * perPage && i > perPage * page - perPage - 1" [city]="city"></app-weather-card>
+  </ng-container>
+</div>
+<div class="pagination-panel">
+  <button (click)="prevPage()" [disabled]="page === 1 || !total">Previous</button>
+  <button (click)="nextPage()" [disabled]="page === totalPages || !total">Next</button>
 </div>

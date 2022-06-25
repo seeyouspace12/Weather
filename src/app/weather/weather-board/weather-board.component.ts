@@ -19,8 +19,24 @@ export class WeatherBoardComponent implements OnInit {
 
   cities$: Subject<string[]> = this.storageService.getCities();
 
-  public ngOnInit(): void {
+  page: number = 1;
+  perPage: number = 4;
+  total: number;
+  totalPages: number;
+
+  ngOnInit(): void {
     this.getLocation();
+    this.cities$.subscribe(cities => {
+      this.checkLastOnPage(cities.length)
+      this.total = cities.length
+      this.totalPages = Math.ceil(cities.length / this.perPage)
+    })
+  }
+
+  checkLastOnPage(total): void {
+    if (this.page * this.perPage - (this.perPage - 1) > total && this.page === this.totalPages && total > 1) {
+      this.prevPage();
+    }
   }
 
   addCityForm = new FormGroup({
@@ -34,9 +50,13 @@ export class WeatherBoardComponent implements OnInit {
     this.addCityForm.controls.city.patchValue('')
   }
 
-  public weather: WeatherResponse[] = [];
+  trackByFn(index, item) {
+    return index;
+  }
 
-  getLocation() {
+  weather: WeatherResponse[] = [];
+
+  private getLocation(): void {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: any) => {
           if (position) {
@@ -47,6 +67,14 @@ export class WeatherBoardComponent implements OnInit {
     } else {
       alert("Geolocation is not supported by this browser.")
     }
+  }
+
+  nextPage(): void {
+    this.page++;
+  }
+
+  prevPage(): void {
+    this.page--;
   }
 
 }

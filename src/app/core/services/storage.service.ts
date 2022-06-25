@@ -1,23 +1,37 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject, take} from "rxjs";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, map, Observable, Subject, take} from "rxjs";
+import {WeatherService} from "./weather.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
 
-  constructor() { }
+  constructor(
+    private weatherService: WeatherService
+  ) {
+  }
 
   cities$: Subject<string[]> = new BehaviorSubject([]);
 
-  addCity(cityName: string): void {
+  addCity(cityName: string): Observable<boolean> {
     let cityList = JSON.parse(localStorage.getItem('cities'))
     if (!cityList) {
       cityList = [];
     }
     cityList.push(cityName)
-    this.cities$.next(cityList);
-    localStorage.setItem('cities', JSON.stringify(cityList))
+    return this.weatherService.getCityData(cityName)
+      .pipe(
+        take(1),
+        map(res => {
+          console.log('serviceres', !!res.length)
+          if (!!res.length) {
+            localStorage.setItem('cities', JSON.stringify(cityList))
+            this.cities$.next(cityList);
+          }
+          return !!res.length
+        })
+      )
   }
 
   getCities(): Subject<string[]> {

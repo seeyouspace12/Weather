@@ -1,8 +1,9 @@
 <div class="board">
   <div class="add-city-container">
     <form [formGroup]="addCityForm" (submit)="addCity()">
-      <input type="text" formControlName="city">
+      <input type="text" formControlName="city" [class.invalid]="errorMessage">
       <button type="submit">Add City</button>
+      <span class="error-message" *ngIf="errorMessage">{{errorMessage}}</span>
     </form>
   </div>
   <app-weather-card *ngIf="mainCityCoords" [coordinates]="mainCityCoords"></app-weather-card>

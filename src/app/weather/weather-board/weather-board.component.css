@@ -14,8 +14,18 @@ input {
 
 button {
   font-size: 20px;
+  margin-right: 10px;
 }
 
 .pagination-panel button:first-child {
   margin-right: 10px;
+}
+
+.error-message {
+  color: orangered;
+}
+
+.invalid {
+  color: orangered;
+  border-color: orangered;
 }

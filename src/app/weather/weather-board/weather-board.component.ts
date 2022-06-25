@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WeatherService} from "../../core/services/weather.service";
 import {Coordinates, WeatherResponse} from "../../shared/models/weather";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -15,27 +15,30 @@ export class WeatherBoardComponent implements OnInit {
   constructor(
     private weatherService: WeatherService,
     private storageService: StorageService
-  ) { }
+  ) {
+  }
 
-  cities$: Subject<string[]> = this.storageService.getCities();
+  cities$: Subject<string[]> = this.storageService.getCities()
 
-  page: number = 1;
-  perPage: number = 4;
-  total: number;
-  totalPages: number;
+  page: number = 1
+  perPage: number = 4
+  total: number
+  totalPages: number
+
+  errorMessage: string = null
 
   ngOnInit(): void {
-    this.getLocation();
+    this.getLocation()
     this.cities$.subscribe(cities => {
-      this.checkLastOnPage(cities.length)
-      this.total = cities.length
-      this.totalPages = Math.ceil(cities.length / this.perPage)
+      this.checkLastOnPage(cities?.length)
+      this.total = cities?.length
+      this.totalPages = Math.ceil(cities?.length / this.perPage)
     })
   }
 
   checkLastOnPage(total): void {
     if (this.page * this.perPage - (this.perPage - 1) > total && this.page === this.totalPages && total > 1) {
-      this.prevPage();
+      this.prevPage()
     }
   }
 
@@ -46,8 +49,16 @@ export class WeatherBoardComponent implements OnInit {
   mainCityCoords: Coordinates
 
   addCity() {
-    this.storageService.addCity(this.addCityForm.getRawValue().city);
-    this.addCityForm.controls.city.patchValue('')
+    this.storageService.addCity(this.addCityForm.getRawValue().city)
+      .subscribe(res => {
+        if (!res) {
+          this.errorMessage = 'City not found'
+          return
+        } else {
+          this.errorMessage = null
+        }
+        this.addCityForm.controls.city.patchValue('')
+      })
   }
 
   trackByFn(index, item) {
@@ -60,7 +71,7 @@ export class WeatherBoardComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: any) => {
           if (position) {
-            this.mainCityCoords = { lat: position.coords.latitude, lon: position.coords.longitude }
+            this.mainCityCoords = {lat: position.coords.latitude, lon: position.coords.longitude}
           }
         },
         (error: any) => console.log(error))
@@ -70,11 +81,12 @@ export class WeatherBoardComponent implements OnInit {
   }
 
   nextPage(): void {
-    this.page++;
+    this.page++
   }
 
+
   prevPage(): void {
-    this.page--;
+    this.page--
   }
 
 }

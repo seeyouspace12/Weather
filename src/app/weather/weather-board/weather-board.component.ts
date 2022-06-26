@@ -28,6 +28,10 @@ export class WeatherBoardComponent implements OnInit {
   total: number
   totalPages: number
 
+  mainCityCoords: Coordinates
+
+  weather: WeatherResponse[] = []
+
   errorMessage: string = null
 
   ngOnInit(): void {
@@ -49,8 +53,6 @@ export class WeatherBoardComponent implements OnInit {
     city: new FormControl(''),
   });
 
-  mainCityCoords: Coordinates
-
   addCity() {
     this.storageService.addCity(this.addCityForm.getRawValue().city)
       .subscribe(res => {
@@ -67,8 +69,6 @@ export class WeatherBoardComponent implements OnInit {
   trackByFn(index) {
     return index;
   }
-
-  weather: WeatherResponse[] = [];
 
   private getLocation(): void {
     if (navigator.geolocation) {

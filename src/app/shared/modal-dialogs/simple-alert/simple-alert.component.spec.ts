@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SimpleAlertComponent } from './simple-alert.component';
+import {SimpleAlertComponent} from './simple-alert.component';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 describe('SimpleAlertComponent', () => {
@@ -9,12 +9,12 @@ describe('SimpleAlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SimpleAlertComponent ],
+      declarations: [SimpleAlertComponent],
       providers: [
         {provide: MAT_DIALOG_DATA, useValue: {}},
         {provide: MatDialogRef, useValue: {}}]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SimpleAlertComponent);
     component = fixture.componentInstance;

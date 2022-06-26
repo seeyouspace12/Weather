@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SimpleAlertComponent } from './modal-dialogs/simple-alert/simple-alert.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {SimpleAlertComponent} from './modal-dialogs/simple-alert/simple-alert.component';
 import {MatButtonModule} from "@angular/material/button";
-
 
 
 @NgModule({
@@ -14,4 +13,5 @@ import {MatButtonModule} from "@angular/material/button";
     MatButtonModule
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}

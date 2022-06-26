@@ -42,7 +42,7 @@ export class StorageService {
     this.cities$
       .pipe(take(1))
       .subscribe(cities => {
-        const newCities = cities.filter(city => city !== cityName);
+        const newCities: string[] = cities.filter(city => city !== cityName);
         this.cities$.next(newCities);
         localStorage.setItem('cities', JSON.stringify(newCities))
       })

@@ -74,7 +74,6 @@ export class WeatherBoardComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: any) => {
           if (position) {
-            console.log('position', position)
             this.mainCityCoords = {lat: position.coords.latitude, lon: position.coords.longitude}
           }
         },

@@ -24,7 +24,6 @@ export class StorageService {
       .pipe(
         take(1),
         map(res => {
-          console.log('serviceres', !!res.length)
           if (!!res.length) {
             localStorage.setItem('cities', JSON.stringify(cityList))
             this.cities$.next(cityList);

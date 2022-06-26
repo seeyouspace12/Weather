@@ -4,6 +4,8 @@ import {Coordinates, WeatherResponse} from "../../shared/models/weather";
 import {FormControl, FormGroup} from "@angular/forms";
 import {StorageService} from "../../core/services/storage.service";
 import {Subject} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {SimpleAlertComponent} from "../../shared/modal-dialogs/simple-alert/simple-alert.component";
 
 @Component({
   selector: 'app-weather-board',
@@ -14,7 +16,8 @@ export class WeatherBoardComponent implements OnInit {
 
   constructor(
     private weatherService: WeatherService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    public dialog: MatDialog
   ) {
   }
 
@@ -61,7 +64,7 @@ export class WeatherBoardComponent implements OnInit {
       })
   }
 
-  trackByFn(index, item) {
+  trackByFn(index) {
     return index;
   }
 
@@ -71,10 +74,17 @@ export class WeatherBoardComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: any) => {
           if (position) {
+            console.log('position', position)
             this.mainCityCoords = {lat: position.coords.latitude, lon: position.coords.longitude}
           }
         },
-        (error: any) => console.log(error))
+        () => {
+          this.dialog.open(SimpleAlertComponent, {
+            height: '300px',
+            width: '600px',
+            data: 'Please allow geolocation and reload the page'
+          });
+        })
     } else {
       alert("Geolocation is not supported by this browser.")
     }

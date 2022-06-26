@@ -27,10 +27,10 @@ span {
 
 .remove {
   position: absolute;
-  right: 30px;
+  right: 20px;
   color: red;
   height: 20px;
-  transform: translateY(-28px);
+  transform: translateY(-18px);
 }
 
 .remove:hover {

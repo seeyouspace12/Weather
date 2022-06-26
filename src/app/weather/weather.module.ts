@@ -4,21 +4,23 @@ import { WeatherBoardComponent } from './weather-board/weather-board.component';
 import { HttpClientModule } from "@angular/common/http";
 import { WeatherCardComponent } from './weather-card/weather-card.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 
 @NgModule({
   declarations: [
     WeatherBoardComponent,
-    WeatherCardComponent
+    WeatherCardComponent,
   ],
   exports: [
-    WeatherBoardComponent
+    WeatherBoardComponent,
   ],
   imports: [
     CommonModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ]
 })
 export class WeatherModule { }
